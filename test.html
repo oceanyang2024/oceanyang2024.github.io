@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple Photo Gallery</title>
+  <title>Photo & Video Gallery</title>
   <style>
     body {
       font-family: sans-serif;
@@ -15,75 +15,111 @@
     }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
       padding: 20px;
-      max-width: 1000px;
+      max-width: 1200px;
       margin: auto;
     }
-    .gallery img {
+    .gallery img,
+    .gallery video {
       width: 100%;
       height: auto;
-      cursor: pointer;
       border-radius: 8px;
+      cursor: pointer;
       transition: transform 0.3s;
+      background: #000;
     }
-    .gallery img:hover {
-      transform: scale(1.05);
+    .gallery img:hover,
+    .gallery video:hover {
+      transform: scale(1.03);
     }
-    /* Lightbox overlay */
+
+    /* Shared Lightbox Styles */
     #lightbox {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
       display: none;
-      background-color: rgba(0, 0, 0, 0.8);
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       z-index: 999;
     }
-    #lightbox img {
+
+    #lightbox-content {
       max-width: 90%;
       max-height: 90%;
+    }
+
+    #lightbox img,
+    #lightbox video {
+      width: 100%;
+      height: auto;
       border-radius: 10px;
     }
-    #lightbox:active {
-      display: none;
+
+    #lightbox video {
+      max-height: 90vh;
     }
   </style>
 </head>
 <body>
 
-  <h1>My Photo Gallery</h1>
+  <h1>Photo & Video Gallery</h1>
+
   <div class="gallery">
-    <img src="photos/p1.jpg" alt="Sample 1">
+    <!-- Images -->
+    <img src="https://picsum.photos/id/1011/600/400" alt="Sample 1">
     <img src="https://picsum.photos/id/1015/600/400" alt="Sample 2">
-    <img src="https://picsum.photos/id/1025/600/400" alt="Sample 3">
-    <img src="https://picsum.photos/id/1035/600/400" alt="Sample 4">
-    <img src="https://picsum.photos/id/1041/600/400" alt="Sample 5">
-    <img src="https://picsum.photos/id/1050/600/400" alt="Sample 6">
+
+    <!-- Videos -->
+    <video data-src="videos/v1.mp4" poster="https://picsum.photos/id/1060/600/400">
+      Your browser does not support video.
+    </video>
+    <video data-src="https://www.w3schools.com/html/movie.mp4" poster="https://picsum.photos/id/1070/600/400">
+      Your browser does not support video.
+    </video>
+
+    <!-- More Images -->
+    <img src="photos/p1.jpg" alt="Sample 3">
+    <img src="https://picsum.photos/id/1050/600/400" alt="Sample 4">
   </div>
 
+  <!-- Lightbox Overlay -->
   <div id="lightbox">
-    <img src="" alt="Full View">
+    <div id="lightbox-content"></div>
   </div>
 
   <script>
-    const galleryImages = document.querySelectorAll('.gallery img');
     const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('img');
+    const content = document.getElementById('lightbox-content');
 
-    galleryImages.forEach(img => {
+    // Open image in lightbox
+    document.querySelectorAll('.gallery img').forEach(img => {
       img.addEventListener('click', () => {
+        content.innerHTML = `<img src="${img.src}" alt="Full Image">`;
         lightbox.style.display = 'flex';
-        lightboxImg.src = img.src;
       });
     });
 
-    lightbox.addEventListener('click', () => {
-      lightbox.style.display = 'none';
+    // Open video in lightbox
+    document.querySelectorAll('.gallery video').forEach(video => {
+      video.addEventListener('click', () => {
+        const src = video.getAttribute('data-src');
+        content.innerHTML = `
+          <video src="${src}" controls autoplay></video>
+        `;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    // Close lightbox on click outside content
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+        content.innerHTML = ''; // Stop video/audio playback
+      }
     });
   </script>
 
