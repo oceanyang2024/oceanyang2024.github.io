@@ -5,6 +5,106 @@
   <title>In Loving Memory</title>
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f6f3f0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #e4dcd6;
+      padding: 30px 10px;
+      font-size: 2em;
+      color: #5a4a42;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 20px;
+    }
+
+    .photo-card {
+      position: relative;
+      max-width: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 10px;
+      font-size: 1em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-card:hover .caption {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    In Loving Memory
+  </header>
+
+  <div class="gallery" id="gallery"></div>
+
+  <script>
+    const photos = [
+      { src: "photos/p1.jpg", caption: "Lunch with Dad at Gov School" },
+    ];
+
+    const gallery = document.getElementById("gallery");
+
+    photos.forEach(photo => {
+      const card = document.createElement("div");
+      card.className = "photo-card";
+
+      const img = document.createElement("img");
+      img.src = photo.src;
+      img.alt = photo.caption;
+
+      const caption = document.createElement("div");
+      caption.className = "caption";
+      caption.textContent = photo.caption;
+
+      card.appendChild(img);
+      card.appendChild(caption);
+      gallery.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>In Loving Memory</title>
+  <style>
+    body {
       font-family: "Segoe UI", sans-serif;
       background-color: #f7f7f7;
       margin: 0;
@@ -159,91 +259,3 @@
 
 </body>
 </html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Simple Photo Gallery</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      background: #f0f0f0;
-    }
-    h1 {
-      text-align: center;
-      padding: 1em;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .gallery img {
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: transform 0.3s;
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-    /* Lightbox overlay */
-    #lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: none;
-      background-color: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    #lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-    }
-    #lightbox:active {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>My Photo Gallery</h1>
-  <div class="gallery">
-    <img src="photos/p1.jpg" alt="Gov School lunch">
-  </div>
-
-  <div id="lightbox">
-    <img src="" alt="Full View">
-  </div>
-
-  <script>
-    const galleryImages = document.querySelectorAll('.gallery img');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('img');
-
-    galleryImages.forEach(img => {
-      img.addEventListener('click', () => {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = img.src;
-      });
-    });
-
-    lightbox.addEventListener('click', () => {
-      lightbox.style.display = 'none';
-    });
-  </script>
-
-</body>
-</html>
-
