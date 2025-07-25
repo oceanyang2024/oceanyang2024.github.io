@@ -2,6 +2,168 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>In Loving Memory</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #eaeaea;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #4a4a4a;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      color: #777;
+    }
+
+    .music-controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    .music-controls button {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .photo-card img {
+      width: 100%;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .photo-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .photo-card:hover .photo-title {
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>In Loving Memory</h1>
+    <p>A Tribute Through Photographs</p>
+    <div class="music-controls">
+      <button id="toggleMusicBtn">Pause Music</button>
+    </div>
+  </header>
+
+  <div class="gallery" id="photoGallery"></div>
+
+  <footer>
+    &copy; 2025 Family & Friends
+  </footer>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="music.mp3" autoplay loop preload="auto"></audio>
+
+  <script>
+    const photos = [
+      { src: "photos/p1.jpg", title: "Lunch with Dad at Gov School" },
+    ];
+
+    const gallery = document.getElementById("photoGallery");
+
+    photos.forEach(photo => {
+      const card = document.createElement("div");
+      card.className = "photo-card";
+
+      const img = document.createElement("img");
+      img.src = photo.src;
+      img.alt = photo.title;
+
+      const caption = document.createElement("div");
+      caption.className = "photo-title";
+      caption.textContent = photo.title;
+
+      card.appendChild(img);
+      card.appendChild(caption);
+      gallery.appendChild(card);
+    });
+
+    // Music controls
+    const bgMusic = document.getElementById("bgMusic");
+    const toggleBtn = document.getElementById("toggleMusicBtn");
+
+    bgMusic.volume = 0.3;
+
+    toggleBtn.addEventListener("click", () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        toggleBtn.textContent = "Pause Music";
+      } else {
+        bgMusic.pause();
+        toggleBtn.textContent = "Play Music";
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
   <title>Simple Photo Gallery</title>
   <style>
     body {
