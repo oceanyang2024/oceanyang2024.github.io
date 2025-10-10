@@ -125,6 +125,27 @@
       header h1 { font-size: 28px; }
     }
   </style>
+
+  <script>
+    // === PASSWORD PROTECTION START ===
+    const correctPassword = "OceanForever2024";
+    const savedPassword = sessionStorage.getItem("enteredPassword");
+
+    // If no saved password or it doesn't match, ask user
+    if (savedPassword !== correctPassword) {
+      const pwd = prompt("Enter password to view this page:");
+
+      // If wrong or blank, stop page loading immediately
+      if (pwd !== correctPassword) {
+	  window.location.href = "access-denied.html"; // <-- your redirect page
+      }
+
+      // If correct, remember for rest of session (optional)
+      sessionStorage.setItem("enteredPassword", pwd);
+    }
+    // === PASSWORD PROTECTION END ===
+  </script>
+
 </head>
 <body>
 
