@@ -145,15 +145,22 @@
       }
     }
   </style>
-</head>
-<body>
+
   <script>
-    const password = prompt("Enter password:");
-    if (password !== "mySecret123") {
-	document.body.innerHTML = "<h2>Access Denied</h2>";
-	throw new Error("Wrong password");
+    const correctPassword = "mySecret123";
+    const entered = sessionStorage.getItem("enteredPassword");
+    if (entered !== correctPassword) {
+      const pwd = prompt("Enter password:");
+      if (pwd === correctPassword) {
+        sessionStorage.setItem("enteredPassword", pwd);
+      } else {
+        document.write("<h2>Access Denied</h2>");
+        throw new Error("Wrong password");
+      }
     }
   </script>
+</head>
+<body>
   <header>
     <h1>In Loving Memory of Ocean Yang</h1>
   </header>
